@@ -1,1 +1,4 @@
 vene/
+.idea/
+*.pyc
+seleniumwrapper/
