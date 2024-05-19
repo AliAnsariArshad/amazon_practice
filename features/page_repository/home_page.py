@@ -1,4 +1,5 @@
 import pdb
+import time
 
 from selenium.webdriver.common.by import By
 
@@ -12,7 +13,7 @@ class HomePage(BasePage):
 
     TXTBOX_SEARCH = (By.CSS_SELECTOR, "#twotabsearchtextbox")
     LBL_RESULT_LIST = (By.CSS_SELECTOR, ".a-size-mini .a-link-normal .a-size-medium ")
-    BTN_ADD_TO_CART = (By.CSS_SELECTOR, "#add-to-cart-button")
+    BTN_ADD_TO_CART = (By.XPATH, "//div[@id='desktop_qualifiedBuyBox']//input[@id='add-to-cart-button' and @title='Add to Shopping Cart']")
     LBL_PRICE = (By.CSS_SELECTOR, "#corePrice_feature_div  .a-price-whole")
     BTN_CART = (By.CSS_SELECTOR, "#attach-sidesheet-view-cart-button .a-button-inner")
     LBL_PRODUCT_PRICE = (By.XPATH, "//div[@data-name='Active Items']//span[contains(@class,'sc-product-price')]")
@@ -22,12 +23,22 @@ class HomePage(BasePage):
         self.type_into_element(self.TXTBOX_SEARCH, text)
         self.press_enter(self.TXTBOX_SEARCH)
 
-    def select_item(self):
+    def select_item(self, item_number):
         product_list = self.get_elements(self.LBL_RESULT_LIST)
-        product_list[0].click()
+        if item_number.lower() == "first":
+            product_list[0].click()
+        elif item_number.lower() == "second":
+            product_list[1].click()
         self.switch_tab()
 
+        # time.sleep(20)
+
     def add_to_cart(self):
+        # add_to_cart = self.get_elements(self.BTN_ADD_TO_CART)
+        # if len(add_to_cart) == 0:
+        #     add_to_cart[0].click()
+        # elif len(add_to_cart) > 0:
+        #     add_to_cart[1].click()
         self.click_on_element(self.BTN_ADD_TO_CART)
 
     def click_on_cart_button(self):

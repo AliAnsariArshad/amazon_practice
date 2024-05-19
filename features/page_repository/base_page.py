@@ -35,7 +35,7 @@ class BasePage:
         except NoSuchElementException as ne:
             raise ne
 
-    def get_elements(self, locator, timeout=10):
+    def get_elements(self, locator, timeout=20):
         locator_type = locator[0]
         locator_value = locator[1]
         elements = []
@@ -71,10 +71,12 @@ class BasePage:
         element.send_keys(Keys.ENTER)
 
     def switch_tab(self):
+        # self.driver.switch_to.window(self.driver.current_window_handle)
         window_handles = self.driver.window_handles
         for handle in window_handles:
             if handle != self.driver.current_window_handle:
                 self.driver.switch_to.window(handle)
+                print(self.driver.title)
                 break
 
     def return_label_text(self, locator):

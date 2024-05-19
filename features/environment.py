@@ -2,6 +2,7 @@ import allure
 from allure_commons.types import AttachmentType
 from selenium import webdriver
 
+
 from utilities.config_read import read_config
 
 
@@ -20,11 +21,18 @@ def before_scenario(context, driver):
     context.driver.get(read_config("basic info","url"))
 
 
-def after_scenario(context,driver):
+def after_scenario(context, driver):
+    # window_handles = context.driver.window_handles
+    # for handle in window_handles:
+    #     if handle != context.driver.current_window_handle:
+    #         context.driver.switch_to.window(handle)
+    context.driver.close()
+
+    print("in after")
     context.driver.quit()
 
 
-def after_step(context,step):
+def after_step(context, step):
     if step.status == 'failed':
         allure.attach(context.driver.get_screenshot_as_png()
                       ,name="failed_screenshot"
